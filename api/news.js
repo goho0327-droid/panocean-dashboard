@@ -1,16 +1,12 @@
 export default async function handler(req, res) {
+  const key = process.env.FINNHUB_KEY;
+  const url = `https://finnhub.io/api/v1/news?category=general&token=${key}`;
+
   try {
-    const { symbol = "028670.KS", from, to } = req.query;
-    const key = process.env.VITE_FINNHUB_KEY;
-    if (!key) return res.status(500).json({ error: "Missing Finnhub key" });
-    const now = new Date();
-    const d1 = from || new Date(now.getTime() - 1000 * 60 * 60 * 24 * 14).toISOString().slice(0, 10);
-    const d2 = to || now.toISOString().slice(0, 10);
-    const url = `https://finnhub.io/api/v1/company-news?symbol=${encodeURIComponent(symbol)}&from=${d1}&to=${d2}&token=${key}`;
-    const r = await fetch(url);
-    const data = await r.json();
-    res.status(r.status).json(data);
-  } catch (e) {
-    res.status(500).json({ error: e.message });
+    const response = await fetch(url);
+    const data = await response.json();
+    res.status(200).json(data.slice(0, 5)); // 최신 뉴스 5개만
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch news' });
   }
 }
