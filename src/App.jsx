@@ -10,7 +10,7 @@ import {
   CartesianGrid,
 } from "recharts";
 
-const USE_MOCK = true; // 실데이터 연결 시 false로 변경
+const USE_MOCK = False; // 실데이터 연결 시 false로 변경
 const FREIGHT_PROVIDER = USE_MOCK ? "MOCK" : "TRADINGECONOMICS";
 const EQUITY_PROVIDER = USE_MOCK ? "MOCK" : "FINNHUB";
 const NEWS_PROVIDER = USE_MOCK ? "MOCK" : "FINNHUB";
